@@ -1,0 +1,104 @@
+ Question 2
+A)
+mysql> Show tables;
++------------------+
+| Tables_in_Task_3 |
++------------------+
+| Entry            |
+| Member           |
+| Team             |
+| Tournament       |
+| Type             |
+| annotation       |
+| expression       |
++------------------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT LastName , FirstName, MemberID from Member where  Coach IS NULL ;
++----------+-----------+----------+
+| LastName | FirstName | MemberID |
++----------+-----------+----------+
+| Stone    | Michael   |      138 |
+| Nolan    | Brenda    |      153 |
+| Branch   | Helen     |      176 |
+| Beck     | Sarah     |      178 |
+| Spence   | Thomas    |      239 |
+| Olson    | Barbara   |      258 |
+| Wilcox   | Daniel    |      323 |
+| Young    | Betty     |      339 |
+| Willis   | Carolyn   |      469 |
+| Kent     | Susan     |      487 |
++----------+-----------+----------+
+10 rows in set (0.00 sec)
+
+
+
+B)
+
+mysql> SELECT LastName,FirstName,MemberID, JoinDate from Member where  year (JoinDate) = '2013' ;
++----------+-----------+----------+---------------------+
+| LastName | FirstName | MemberID | JoinDate            |
++----------+-----------+----------+---------------------+
+| Burton   | Sandra    |      228 | 2013-07-09 00:00:00 |
+| Olson    | Barbara   |      258 | 2013-07-29 00:00:00 |
+| Pollard  | Robert    |      286 | 2013-08-13 00:00:00 |
++----------+-----------+----------+---------------------+
+3 rows in set (0.00 sec)
+
+
+C)
+
+mysql> SELECT Entry.Year ,Member.MemberID ,Member.FirstName,  Member.LastName FROM Entry JOIN  Member  ON Member.MemberID=Entry.MemberID
+    -> where Entry.year <> 2013 AND  Entry.MemberID NOT IN  (SELECT Entry.MemberID FROM Entry where Entry.year = 2013) ;
++------+----------+-----------+----------+
+| Year | MemberID | FirstName | LastName |
++------+----------+-----------+----------+
+| 2014 |      118 | Melissa   | McKenzie |
+| 2015 |      228 | Sandra    | Burton   |
+| 2015 |      228 | Sandra    | Burton   |
+| 2015 |      228 | Sandra    | Burton   |
+| 2014 |      258 | Barbara   | Olson    |
+| 2014 |      258 | Barbara   | Olson    |
++------+----------+-----------+----------+
+6 rows in set (0.00 sec)
+
+
+D)
+
+
+mysql> Select playedYear.tourId, m.memberID, m.firstname,m.lastname from Member as m Join  (Select  e.memberID, e.tourI
+d, e.Year from Entry as e Join  Tournament as t on t.tourId = e.tourId ) as playedYear on  m.memberId = playedYear.memb
+erId;
++--------+----------+-----------+----------+
+| tourId | memberID | firstname | lastname |
++--------+----------+-----------+----------+
+|     24 |      118 | Melissa   | McKenzie |
+|     36 |      228 | Sandra    | Burton   |
+|     25 |      228 | Sandra    | Burton   |
+|     24 |      228 | Sandra    | Burton   |
+|     40 |      235 | William   | Cooper   |
+|     40 |      235 | William   | Cooper   |
+|     38 |      235 | William   | Cooper   |
+|     38 |      235 | William   | Cooper   |
+|     40 |      239 | Thomas    | Spence   |
+|     25 |      239 | Thomas    | Spence   |
+|     38 |      258 | Barbara   | Olson    |
+|     24 |      258 | Barbara   | Olson    |
+|     24 |      286 | Robert    | Pollard  |
+|     24 |      286 | Robert    | Pollard  |
+|     24 |      286 | Robert    | Pollard  |
+|     40 |      415 | William   | Taylor   |
+|     40 |      415 | William   | Taylor   |
+|     40 |      415 | William   | Taylor   |
+|     38 |      415 | William   | Taylor   |
+|     38 |      415 | William   | Taylor   |
+|     36 |      415 | William   | Taylor   |
+|     36 |      415 | William   | Taylor   |
+|     25 |      415 | William   | Taylor   |
+|     24 |      415 | William   | Taylor   |
++--------+----------+-----------+----------+
+24 rows in set (0.00 sec)
+
+
+
+
